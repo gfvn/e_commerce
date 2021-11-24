@@ -16,8 +16,6 @@ class HomeViewModel extends GetxController {
       (value) {
 
         }
-        
-      },
     );
   }
 }
