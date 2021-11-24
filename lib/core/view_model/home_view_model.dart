@@ -7,15 +7,23 @@ import 'package:get/get.dart';
 class HomeViewModel extends GetxController {
   final List<CategoryViewModel> _categorise = [];
 
+  bool isRefresh = false;
+
+  List<CategoryViewModel>  get categorise => _categorise;
+
   HomeViewModel() {
     getCategory();
   }
 
   getCategory() async {
-    HomeService().getCategory().then(
-      (value) {
-
-        }
-    );
+    isRefresh = false;
+    HomeService().getCategory().then((value) {
+      value.forEach((element) {
+        _categorise.add(
+          CategoryViewModel.fromJson(element.data()),
+        );
+      });
+    });
+    isRefresh = true;
   }
 }

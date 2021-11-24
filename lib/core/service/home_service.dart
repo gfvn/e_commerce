@@ -4,7 +4,7 @@ class HomeService{
   final CollectionReference _collectionReference =
   FirebaseFirestore.instance.collection('categories');
 
-  Future<List<QueryDocumentSnapshot>> getCategory() async {
+  Future getCategory() async {
     var value =  await _collectionReference.get();
     return value.docs;
   }
