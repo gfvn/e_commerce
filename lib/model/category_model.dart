@@ -1,4 +1,4 @@
-import 'package:e_commerce/main.dart';
+
 
 class CategoryViewModel{
   String? name, image;

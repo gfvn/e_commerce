@@ -100,6 +100,7 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                         ),
                         hSizedBox3,
                         CustomButton(
+                          width: double.infinity,
                           text: 'SIGN IN',
                           height: 50.0,
                           onPressed: () {

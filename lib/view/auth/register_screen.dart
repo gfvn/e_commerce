@@ -92,6 +92,7 @@ class RegisterScreen extends GetWidget<AuthViewModel> {
                         ),
                         hSizedBox3,
                         CustomButton(
+                          width: double.infinity,
                           text: 'SIGN UP',
                           height: 50.0,
                           onPressed: () {
