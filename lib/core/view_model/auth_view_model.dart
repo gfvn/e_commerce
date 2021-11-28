@@ -2,6 +2,7 @@ import 'package:e_commerce/core/service/firestore_user.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/shared/helper/local_storage_data.dart';
+import 'package:e_commerce/view/control/control_view.dart';
 import 'package:e_commerce/view/homwLayout/home_layout_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,6 @@ class AuthViewModel extends GetxController {
 
   String? get user => _user.value?.email;
 
-  late LocalStorageData localStorageData;
 
   @override
   void onInit() {
@@ -55,7 +55,7 @@ class AuthViewModel extends GetxController {
     _auth.signInWithCredential(credential).then((value) {
       print(value.user);
       saveUser(value);
-      Get.to(ControlViewModel());
+      Get.to(ControlView());
     });
   }
 
@@ -72,12 +72,12 @@ class AuthViewModel extends GetxController {
         final FacebookAccessToken? accessToken = res.accessToken;
         final AuthCredential authCredential =
             FacebookAuthProvider.credential(accessToken!.token);
-        await FirebaseAuth.instance
+        final result = await FirebaseAuth.instance
             .signInWithCredential(authCredential)
             .then(
           (value) {
             saveUser(value);
-            Get.to(ControlViewModel());
+            Get.to(ControlView());
           },
         );
         // Get profile data from facebook for use in the app
@@ -110,7 +110,7 @@ class AuthViewModel extends GetxController {
             setData(UserModel.fromJson(value.data() as Map<String,dynamic>));
           });
           saveUser(value);
-          Get.to(ControlViewModel());
+          Get.to(ControlView());
         },
       );
     } catch (e) {
@@ -155,6 +155,6 @@ class AuthViewModel extends GetxController {
   }
 
   void setData(UserModel userModel) async {
-    await localStorageData.setDataUser(userModel);
+    await LocalStorageData().setDataUser(userModel);
   }
 }
