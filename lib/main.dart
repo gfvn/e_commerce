@@ -1,7 +1,6 @@
 import 'package:e_commerce/shared/helper/binding.dart';
 import 'package:e_commerce/shared/style/theme.dart';
 import 'package:e_commerce/view/control/control_view.dart';
-import 'package:e_commerce/view/auth/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,6 +23,7 @@ class MyApp extends StatelessWidget {
       theme: themeLite,
       darkTheme: themeDark,
       themeMode: ThemeMode.light,
+
       home: ControlView(),
     );
   }

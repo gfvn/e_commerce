@@ -9,4 +9,8 @@ class FirestoreUsers {
     print(userModel.name);
     return await _collectionReference.doc(userModel.uId).set(userModel.toMap());
   }
+
+  Future<DocumentSnapshot> getCurrentUser(String id) async{
+    return await _collectionReference.doc(id).get();
+  }
 }

@@ -1,34 +1,18 @@
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
-import 'package:e_commerce/shared/style/dimensions.dart';
-import 'package:e_commerce/shared/style/icon_broken.dart';
-import 'package:e_commerce/view/auth/login_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeView extends GetWidget<AuthViewModel> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextButton(
-                  onPressed: () {
-                    _auth.signOut();
-                    Get.offAll(LoginScreen());
-                  },
-                  child: const Icon(IconBroken.Logout)),
-            )
-          ],
-        ),
+        appBar: AppBar(),
         body: GetBuilder<ControlViewModel>(init: ControlViewModel(), builder: (controller) => controller.nextPage[controller.currentIndex],),
         bottomNavigationBar: bottomNavigationBar(context)
     );

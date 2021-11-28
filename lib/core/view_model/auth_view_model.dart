@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/core/service/firestore_user.dart';
+import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/model/user_model.dart';
-import 'package:e_commerce/view/cart/cart_view.dart';
-import 'package:e_commerce/view/feeds/feeds_view.dart';
+import 'package:e_commerce/shared/helper/local_storage_data.dart';
 import 'package:e_commerce/view/homwLayout/home_layout_view.dart';
-import 'package:e_commerce/view/user/user_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +22,8 @@ class AuthViewModel extends GetxController {
   final Rxn<User> _user = Rxn<User>();
 
   String? get user => _user.value?.email;
+
+  late LocalStorageData localStorageData;
 
   @override
   void onInit() {
@@ -55,9 +55,8 @@ class AuthViewModel extends GetxController {
     _auth.signInWithCredential(credential).then((value) {
       print(value.user);
       saveUser(value);
-      Get.offAll(HomeView());
+      Get.to(ControlViewModel());
     });
-
   }
 
   void facebookLogin() async {
@@ -73,14 +72,14 @@ class AuthViewModel extends GetxController {
         final FacebookAccessToken? accessToken = res.accessToken;
         final AuthCredential authCredential =
             FacebookAuthProvider.credential(accessToken!.token);
-        final result = await FirebaseAuth.instance
+        await FirebaseAuth.instance
             .signInWithCredential(authCredential)
             .then(
-              (value) {
-                saveUser(value);
-                Get.offAll(HomeView());
-              },
-            );
+          (value) {
+            saveUser(value);
+            Get.to(ControlViewModel());
+          },
+        );
         // Get profile data from facebook for use in the app
         final profile = await _facebookSignIn.getUserProfile();
         print('Hello, ${profile!.name}! You ID: ${profile.userId}');
@@ -106,9 +105,12 @@ class AuthViewModel extends GetxController {
           .signInWithEmailAndPassword(
               email: email.text, password: password.text)
           .then(
-        (value) {
+        (value) async {
+          await FirestoreUsers().getCurrentUser(value.user!.uid).then((value) {
+            setData(UserModel.fromJson(value.data() as Map<String,dynamic>));
+          });
           saveUser(value);
-          Get.offAll(HomeView());
+          Get.to(ControlViewModel());
         },
       );
     } catch (e) {
@@ -143,15 +145,16 @@ class AuthViewModel extends GetxController {
   }
 
   void saveUser(UserCredential userCredential) async {
-    await FirestoreUsers().addUserToFirestore(
-      UserModel(
-        name: name.text == "" ? userCredential.user!.displayName : name.text,
-        email: email.text == "" ? userCredential.user!.email: email.text,
-        uId: userCredential.user!.uid,
-      ),
+    UserModel userModel = UserModel(
+      name: name.text == "" ? userCredential.user!.displayName : name.text,
+      email: email.text == "" ? userCredential.user!.email : email.text,
+      uId: userCredential.user!.uid,
     );
+    await FirestoreUsers().addUserToFirestore(userModel);
+    setData(userModel);
   }
 
-
-
+  void setData(UserModel userModel) async {
+    await localStorageData.setDataUser(userModel);
+  }
 }

@@ -18,6 +18,7 @@ class CustomText extends StatelessWidget {
       alignment: alignment,
       child: Text(
         text,
+        overflow: TextOverflow.ellipsis,
         maxLines: sizeMaxLines,
         style: TextStyle(
           fontSize: fontSize,
