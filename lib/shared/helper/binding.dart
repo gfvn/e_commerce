@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 class Binding extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut(() => LocalStorageData());
+    Get.lazyPut(() => UserViewModel());
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => ControlViewModel());
     Get.put(() => HomeViewModel());

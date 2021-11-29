@@ -1,5 +1,4 @@
 import 'package:e_commerce/core/service/firestore_user.dart';
-import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/shared/helper/local_storage_data.dart';
 import 'package:e_commerce/view/control/control_view.dart';
@@ -149,6 +148,7 @@ class AuthViewModel extends GetxController {
       name: name.text == "" ? userCredential.user!.displayName : name.text,
       email: email.text == "" ? userCredential.user!.email : email.text,
       uId: userCredential.user!.uid,
+      image: 'https://image.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg'
     );
     await FirestoreUsers().addUserToFirestore(userModel);
     setData(userModel);

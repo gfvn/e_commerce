@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:e_commerce/core/view_model/user_view_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
 import 'package:e_commerce/shared/style/dimensions.dart';
@@ -14,16 +15,25 @@ class UserView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<UserViewModel>(
       init: UserViewModel(),
-      builder: (controller) => Padding(
+      builder: (controller) => ConditionalBuilder(
+        condition: controller.isProfileLoading,
+        builder: (context) => builderItem(context, controller),
+        fallback: (context) => const Center(child: CircularProgressIndicator()),
+      ),
+    );
+  }
+
+  Widget builderItem(context, controller) => Padding(
         padding: padding(context),
         child: Column(
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                    radius: 70.0,
-                    backgroundImage: NetworkImage(
-                        'https://image.freepik.com/free-photo/happy-bearded-young-man-looks-with-joyful-expression-has-friendly-smile-wears-yellow-sweater-red-hat_295783-1388.jpg')),
+                CircleAvatar(
+                  radius: 70.0,
+                  backgroundImage:
+                      NetworkImage('${controller.userModel!.image}'),
+                ),
                 wSizedBox3,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +41,7 @@ class UserView extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: CustomText(
-                        text: 'mostsafs',
+                        text: '${controller.userModel!.name}',
                         fontSize: 26.0,
                         fontFamily: 'DisplayRegularMedium',
                         sizeMaxLines: 1,
@@ -39,7 +49,7 @@ class UserView extends StatelessWidget {
                     ),
                     hSizedBox1,
                     CustomText(
-                      text: 'dkshfri976@gmail.com',
+                      text: '${controller.userModel!.email}',
                       fontSize: 14.0,
                       fontFamily: 'DisplayRegular',
                     ),
@@ -57,7 +67,11 @@ class UserView extends StatelessWidget {
                     children: [
                       Image.asset('$urlImage/Icon_Edit-Profile.png'),
                       wSizedBox2,
-                      CustomText(text: 'Edit Profile', fontSize: 18, fontFamily: 'DisplayRegular',),
+                      CustomText(
+                        text: 'Edit Profile',
+                        fontSize: 18,
+                        fontFamily: 'DisplayRegular',
+                      ),
                       Spacer(),
                       Icon(IconBroken.Arrow___Right_2),
                     ],
@@ -67,7 +81,11 @@ class UserView extends StatelessWidget {
                     children: [
                       Image.asset('$urlImage/Icon_Location.png'),
                       wSizedBox2,
-                      CustomText(text: 'Shipping Address', fontSize: 18, fontFamily: 'DisplayRegular',),
+                      CustomText(
+                        text: 'Shipping Address',
+                        fontSize: 18,
+                        fontFamily: 'DisplayRegular',
+                      ),
                       Spacer(),
                       Icon(IconBroken.Arrow___Right_2),
                     ],
@@ -77,7 +95,11 @@ class UserView extends StatelessWidget {
                     children: [
                       Image.asset('$urlImage/Icon_History.png'),
                       wSizedBox2,
-                      CustomText(text: 'Order History', fontSize: 18, fontFamily: 'DisplayRegular',),
+                      CustomText(
+                        text: 'Order History',
+                        fontSize: 18,
+                        fontFamily: 'DisplayRegular',
+                      ),
                       Spacer(),
                       Icon(IconBroken.Arrow___Right_2),
                     ],
@@ -87,7 +109,11 @@ class UserView extends StatelessWidget {
                     children: [
                       Image.asset('$urlImage/Icon_Payment.png'),
                       wSizedBox2,
-                      CustomText(text: 'Cards', fontSize: 18, fontFamily: 'DisplayRegular',),
+                      CustomText(
+                        text: 'Cards',
+                        fontSize: 18,
+                        fontFamily: 'DisplayRegular',
+                      ),
                       Spacer(),
                       Icon(IconBroken.Arrow___Right_2),
                     ],
@@ -97,21 +123,29 @@ class UserView extends StatelessWidget {
                     children: [
                       Image.asset('$urlImage/Icon_Alert.png'),
                       wSizedBox2,
-                      CustomText(text: 'Notifications', fontSize: 18, fontFamily: 'DisplayRegular',),
+                      CustomText(
+                        text: 'Notifications',
+                        fontSize: 18,
+                        fontFamily: 'DisplayRegular',
+                      ),
                       Spacer(),
                       Icon(IconBroken.Arrow___Right_2),
                     ],
                   ),
                   hSizedBox3,
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       controller.sinOut();
                     },
                     child: Row(
                       children: [
                         Image.asset('$urlImage/Icon_Exit.png'),
                         wSizedBox2,
-                        CustomText(text: 'Log Out', fontSize: 18, fontFamily: 'DisplayRegular',),
+                        CustomText(
+                          text: 'Log Out',
+                          fontSize: 18,
+                          fontFamily: 'DisplayRegular',
+                        ),
                         Spacer(),
                         Icon(IconBroken.Arrow___Right_2),
                       ],
@@ -122,7 +156,5 @@ class UserView extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
+      );
 }
