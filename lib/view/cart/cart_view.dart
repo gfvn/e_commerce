@@ -2,10 +2,12 @@ import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/model/cart_product_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
 import 'package:e_commerce/shared/style/dimensions.dart';
+import 'package:e_commerce/view/checkout/checkout_view.dart';
 import 'package:e_commerce/view/widgets/custom_button.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -14,67 +16,88 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GetBuilder<CartViewModel>(
-        init: CartViewModel(),
-        builder: (controller) => Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: ListView.builder(
-                itemBuilder: (context, index){
-                  if(controller.cartProduct[index].count != 0)
-                    {
-                      return cartBuildItem(
-                          context, index, controller.cartProduct[index],controller);
-                    }
-                  return const SizedBox.shrink();
-                },
-                itemCount: controller.cartProduct.length,
-              ),
-            ),
-            Container(
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 35.0, vertical: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return GetBuilder<CartViewModel>(
+      init: CartViewModel(),
+      builder: (controller) =>controller.total != 0 && controller.cartProduct.isNotEmpty
+          ? Scaffold(
+        body: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        if (controller.cartProduct[index].count != 0) {
+                          return cartBuildItem(context, index,
+                              controller.cartProduct[index], controller);
+                        }
+                        return const SizedBox.shrink();
+                      },
+                      itemCount: controller.cartProduct.length,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 35.0, vertical: 20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: 'TOTAL',
+                                fontSize: 14,
+                                color: Colors.grey,
+                                fontFamily: 'DisplayRegular',
+                              ),
+                              CustomText(
+                                text: '\$${controller.total}',
+                                fontSize: 20,
+                                color: primaryColor,
+                                fontFamily: 'DisplayRegularBold',
+                              ),
+                            ],
+                          ),
+                          CustomButton(
+                            height: 60.0,
+                            text: 'CHECKOUT',
+                            onPressed: () {
+                              Get.offAll(CheckOutView());
+                            },
+                            width: 170.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              )) :
+        Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          text: 'TOTAL',
-                          fontSize: 14,
-                          color: Colors.grey,
-                          fontFamily: 'DisplayRegular',
-                        ),
-                        CustomText(
-                          text: '\$${controller.total}',
-                          fontSize: 20,
-                          color: primaryColor,
-                          fontFamily: 'DisplayRegularBold',
-                        ),
-                      ],
+                    SvgPicture.asset(
+                      '$urlImage/cart.svg',
+                      height: 250.0,
+                      width: 250.0,
                     ),
-                    CustomButton(
-                      height: 60.0,
-                      text: 'CHECKOUT',
-                      onPressed: () {},
-                      width: 170.0,
-                    ),
+                    hSizedBox2,
+                    CustomText(
+                      text: 'Cart Empty',
+                      fontSize: 30,
+                      color: primaryColor,
+                      alignment: Alignment.center,
+                    )
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
-  Widget cartBuildItem(context, int index, CartProductModel cartProduct, CartViewModel controller) =>
+  Widget cartBuildItem(context, int index, CartProductModel cartProduct,
+          CartViewModel controller) =>
       Dismissible(
         background: Container(
           alignment: Alignment.centerLeft,
@@ -146,9 +169,9 @@ class CartView extends StatelessWidget {
                                   minimumSize: const Size(50, 30),
                                 ),
                                 child: const Icon(
-                                    Icons.add,
-                                    size: 15,
-                                    color: Colors.black45,
+                                  Icons.add,
+                                  size: 15,
+                                  color: Colors.black45,
                                 )),
                             Center(
                               child: Center(
@@ -168,9 +191,9 @@ class CartView extends StatelessWidget {
                                   minimumSize: const Size(50, 30),
                                 ),
                                 child: const Icon(
-                                    Icons.remove,
-                                    size: 15,
-                                    color: Colors.black45,
+                                  Icons.remove,
+                                  size: 15,
+                                  color: Colors.black45,
                                 )),
                           ],
                         ),
