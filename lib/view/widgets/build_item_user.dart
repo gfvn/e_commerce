@@ -9,23 +9,9 @@ class BuildItemUser extends StatelessWidget {
 
   final int index;
 
-  List<String> images = [
-    '$urlImage/Icon_Edit-Profile.png',
-    '$urlImage/Icon_Location.png',
-    '$urlImage/Icon_History.png',
-    '$urlImage/Icon_Payment.png',
-    '$urlImage/Icon_Alert.png',
-    '$urlImage/Icon_Exit.png',
-  ];
 
-  List<String> text = [
-    'Edit Profile',
-    'Shipping Address',
-    'Order History',
-    'Cards',
-    'Notifications',
-    'Log Out',
-  ];
+
+
 
 
   @override

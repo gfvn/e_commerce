@@ -64,13 +64,12 @@ class UserView extends StatelessWidget {
               child: Column(
                 children: [
                   ListView.separated(
-                    scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context, index) => BuildItemUser(
                       index: index,
                     ),
                     separatorBuilder: (context, index) => hSizedBox3,
-                    itemCount: 5,
+                    itemCount: text.length,
                   )
                 ],
               ),
