@@ -11,6 +11,8 @@ class HomeViewModel extends GetxController {
   List<CategoryViewModel> get categorise => _categorise;
   final List<CategoryViewModel> _categorise = [];
 
+  HomeService homeService = HomeService();
+
   List<ProductModel> get products => _products;
   final List<ProductModel> _products = [];
 
@@ -21,7 +23,7 @@ class HomeViewModel extends GetxController {
 
   getCategory() async {
     _isRefresh = false;
-    await HomeService().getCategory().then((value) {
+    await homeService.getCategory().then((value) {
       value.forEach((element) {
         _categorise.add(
           CategoryViewModel.fromJson(element.data()),
@@ -34,7 +36,7 @@ class HomeViewModel extends GetxController {
 
   getProduct() async {
     _isRefresh = false;
-    await HomeService().getProduct().then(
+    await homeService.getProduct().then(
           (value) {
             value.forEach((element) {
               _products.add(

@@ -1,144 +1,129 @@
-
-import 'package:e_commerce/core/view_model/checkout_view_model.dart';
-import 'package:e_commerce/shared/constants/constants.dart';
-import 'package:e_commerce/view/checkout/finish_view.dart';
-import 'package:e_commerce/view/widgets/add_address.dart';
-import 'package:e_commerce/view/widgets/delevery_time.dart';
-import 'package:e_commerce/view/widgets/summary.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:status_change/status_change.dart';
 
-class CheckOutView extends StatelessWidget {
+class CheckOutView extends StatefulWidget {
+  const CheckOutView({Key? key}) : super(key: key);
 
+  @override
+  State<CheckOutView> createState() => _CheckoutPageState();
+}
 
-
-
-  CheckOutView({Key? key}) : super(key: key);
+class _CheckoutPageState extends State<CheckOutView> {
+  static const _steps = [
+    Step(
+      title: Text('Address'),
+      content: _AddressForm(),
+    ),
+    Step(
+      title: Text('Card Details'),
+      content: _CardForm(),
+    ),
+    Step(
+      title: Text('Overview'),
+      content: _Overview(),
+    )
+  ];
+  int _currentStep =0;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CheckOutViewModel>(
-      init: CheckOutViewModel(),
-      builder:(controller)=> Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          title: Text(
-            "CheckOut",
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Container(
-              height: 100,
-              child: StatusChange.tileBuilder(
-                theme: StatusChangeThemeData(
-                  direction: Axis.horizontal,
-                  connectorTheme: ConnectorThemeData(space: 1.0, thickness: 1.0),
-                ),
-                builder: StatusChangeTileBuilder.connected(
-                  itemWidth: (_) =>
-                  MediaQuery.of(context).size.width / _processes.length,
-                  nameWidgetBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        _processes[index],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: controller.getColor(index),
-                        ),
-                      ),
-                    );
-                  },
-                  indicatorWidgetBuilder: (_, index) {
-                    if (index <= controller.processIndex) {
-                      return DotIndicator(
-                        size: 35.0,
-                        border: Border.all(color: Colors.green, width: 1),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return OutlinedDotIndicator(
-                        size: 30,
-                        borderWidth: 1.0,
-                        color: todoColor,
-                      );
-                    }
-                  },
-                  lineWidgetBuilder: (index) {
-                    if (index > 0) {
-                      if (index == controller.processIndex) {
-                        final prevColor = controller.getColor(index - 1);
-                        final color = controller.getColor(index);
-                        var gradientColors;
-                        gradientColors = [
-                          prevColor,
-                          Color.lerp(prevColor, color, 0.5)
-                        ];
-                        return DecoratedLineConnector(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: gradientColors,
-                            ),
-                          ),
-                        );
-                      } else {
-                        return SolidLineConnector(
-                          color: controller.getColor(index),
-                        );
-                      }
-                    } else {
-                      return null;
-                    }
-                  },
-                  itemCount: _processes.length,
-                ),
-              ),
-            ),
-            controller.pages == Pages.DeliveryTime
-                ? const DeliveryTime()
-                : controller.pages == Pages.AddAddress
-                ? const AddAddress()
-                : Summary()
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.skip_next),
-          onPressed: () {
-            controller.processIndex++;
-              if (controller.processIndex == 1) {
-                controller.pages = Pages.AddAddress;
-              } else if (controller.processIndex == 2) {
-                controller.pages = Pages.Summary;
-              } else if (controller.processIndex == 3) {
-                Get.to(FinishView());
-            };
-          },
-          backgroundColor: inProgressColor,
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Checkout'),
+      ),
+      body: Stepper(
+        steps: _steps,
+        type: StepperType.horizontal,
+
+        onStepTapped: (step) => setState(() => _currentStep = step),
+        onStepContinue: () {
+          setState(() {
+            if (_currentStep < _steps.length - 1) {
+              _currentStep += 1;
+            } else {
+              _currentStep = 0;
+            }
+          });
+        },
+        onStepCancel: () {
+          setState(() {
+            if (_currentStep > 0) {
+              _currentStep -= 1;
+            } else {
+              _currentStep = 0;
+            }
+          });
+        },
+        currentStep: _currentStep,
+
       ),
     );
   }
 }
 
-final _processes = [
-  'Delivery',
-  'Address',
-  'Summer',
-];
+class _AddressForm extends StatelessWidget {
+  const _AddressForm({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Street',
+          ),
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'City',
+          ),
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Postcode',
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CardForm extends StatelessWidget {
+  const _CardForm({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Card number',
+          ),
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'Expiry date',
+          ),
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: 'CVV',
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Overview extends StatelessWidget {
+  const _Overview({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: const [
+        Center(child: Text('Thank you for your order!')),
+      ],
+    );
+  }
+}
+

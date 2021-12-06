@@ -30,7 +30,8 @@ class UserView extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  radius: 70.0,
+                  backgroundColor: Colors.grey,
+                  radius: 60.0,
                   backgroundImage:
                       NetworkImage('${controller.userModel!.image}'),
                 ),
@@ -66,7 +67,7 @@ class UserView extends StatelessWidget {
                   ListView.separated(
                     shrinkWrap: true,
                     itemBuilder: (context, index) => BuildItemUser(
-                      index: index,
+                      index: index, userModel: controller.userModel,
                     ),
                     separatorBuilder: (context, index) => hSizedBox3,
                     itemCount: text.length,

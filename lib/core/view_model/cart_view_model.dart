@@ -17,7 +17,6 @@ class CartViewModel extends GetxController {
 
   CartViewModel(){
     getAllProductModel();
-
   }
 
   addProduct(CartProductModel cartDatabaseModel) async {
@@ -30,26 +29,27 @@ class CartViewModel extends GetxController {
       }
 
     await dbHelper.insertDatabase(cartDatabaseModel);
+    _cartProduct.add(cartDatabaseModel);
     _total += (double.parse(cartDatabaseModel.price!) * cartDatabaseModel.count!);
     update();
 
   }
-  getTotal(){
-    for(int i=0; i < _cartProduct.length ;i++)
-    {
-      _total += (double.parse(_cartProduct[i].price!) * _cartProduct[i].count!);
-    }
-  }
+
 
   getAllProductModel() async {
     _loading = false;
-
     _cartProduct = await dbHelper.getAllProduct();
     getTotal();
     _loading = false;
     update();
   }
 
+  getTotal(){
+    for(int i=0; i < _cartProduct.length ;i++)
+    {
+      _total += (double.parse(_cartProduct[i].price!) * _cartProduct[i].count!);
+    }
+  }
   addCount(int index) async {
     if ( _cartProduct[index].count != null)  _cartProduct[index].count =  _cartProduct[index].count! + 1;
     _total += double.parse(_cartProduct[index].price!);

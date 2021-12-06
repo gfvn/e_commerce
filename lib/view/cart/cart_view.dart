@@ -3,6 +3,7 @@ import 'package:e_commerce/model/cart_product_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
 import 'package:e_commerce/shared/style/dimensions.dart';
 import 'package:e_commerce/view/checkout/checkout_view.dart';
+import 'package:e_commerce/view/checkout/checkout_view.dart';
 import 'package:e_commerce/view/widgets/custom_button.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,7 @@ class CartView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<CartViewModel>(
       init: CartViewModel(),
-      builder: (controller) =>controller.total != 0 && controller.cartProduct.isNotEmpty
+      builder: (controller) => controller.total != 0 && controller.cartProduct.isNotEmpty
           ? Scaffold(
         body: Column(
                 children: [
@@ -64,7 +65,7 @@ class CartView extends StatelessWidget {
                             height: 60.0,
                             text: 'CHECKOUT',
                             onPressed: () {
-                              Get.offAll(CheckOutView());
+                              Get.to(CheckOutView());
                             },
                             width: 170.0,
                           ),

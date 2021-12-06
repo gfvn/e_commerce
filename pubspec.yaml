@@ -31,7 +31,11 @@ dependencies:
   path: ^1.8.0
   shared_preferences: ^2.0.9
   flutter_svg: ^0.23.0+1
-  status_change: ^2.0.0
+  image_picker: ^0.8.4+4
+  uri: ^1.0.0
+
+
+
 
 
 

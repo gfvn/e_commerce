@@ -20,8 +20,11 @@ class AuthViewModel extends GetxController {
   TextEditingController name = TextEditingController();
 
   final Rxn<User> _user = Rxn<User>();
+  final Rxn<User> _userId = Rxn<User>();
 
   String? get user => _user.value?.email;
+
+  String? get userId => _user.value?.uid;
 
 
   @override
@@ -29,6 +32,7 @@ class AuthViewModel extends GetxController {
     // TODO: implement onInit
     super.onInit();
     _user.bindStream(_auth.authStateChanges());
+    _userId.bindStream(_auth.authStateChanges());
   }
 
   @override
@@ -148,7 +152,9 @@ class AuthViewModel extends GetxController {
       name: name.text == "" ? userCredential.user!.displayName : name.text,
       email: email.text == "" ? userCredential.user!.email : email.text,
       uId: userCredential.user!.uid,
-      image: 'https://image.freepik.com/free-photo/waist-up-portrait-handsome-serious-unshaven-male-keeps-hands-together-dressed-dark-blue-shirt-has-talk-with-interlocutor-stands-against-white-wall-self-confident-man-freelancer_273609-16320.jpg'
+      image: 'https://firebasestorage.googleapis.com/v0/b/e-commerce-b50f8.appspot.com/o/user%2Fperson.png?alt=media&token=f3b2451c-471c-4f71-87a7-bca2d234d391',
+      gender: '',
+      age: '0',
     );
     await FirestoreUsers().addUserToFirestore(userModel);
     setData(userModel);

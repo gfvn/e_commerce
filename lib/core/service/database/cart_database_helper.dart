@@ -37,7 +37,6 @@ class CartDatabaseHelper {
       model.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace
     );
-
   }
 
 

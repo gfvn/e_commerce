@@ -1,4 +1,9 @@
+import 'package:e_commerce/core/view_model/user_view_model.dart';
+import 'package:e_commerce/view/edit_profile/edit_profile_view.dart';
+import 'package:e_commerce/view/shipping_address/shipping_address_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 Color primaryColor = HexColor('00C569');
@@ -34,6 +39,12 @@ const List<String> text = [
   'Notifications',
   'Log Out',
 ];
+
+enum chooseType {
+  male , female
+}
+
+
 const List<String> images = [
   '$urlImage/Icon_Edit-Profile.png',
   '$urlImage/Icon_Location.png',
@@ -41,6 +52,16 @@ const List<String> images = [
   '$urlImage/Icon_Payment.png',
   '$urlImage/Icon_Alert.png',
   '$urlImage/Icon_Exit.png',
+];
+
+
+List<Widget> userPages = [
+  EditProfileView(userModel: Get.find<UserViewModel>().userModel!,),
+  ShippingAddressView(),
+  ShippingAddressView(),
+  ShippingAddressView(),
+  ShippingAddressView(),
+  ShippingAddressView(),
 ];
 
 const kTileHeight = 50.0;

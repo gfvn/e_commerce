@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
+import 'package:e_commerce/shared/style/icon_broken.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,9 @@ class HomeView extends GetWidget<AuthViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+            // InkWell(onTap:(){},child: Icon(IconBroken.Logout))
+        ),
         body: GetBuilder<ControlViewModel>(init: ControlViewModel(), builder: (controller) => controller.nextPage[controller.currentIndex],),
         bottomNavigationBar: bottomNavigationBar(context)
     );
