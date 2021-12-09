@@ -6,7 +6,7 @@ import 'package:e_commerce/core/view_model/checkout_view_model.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/core/view_model/edit_profil_view_model.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
-import 'package:e_commerce/core/view_model/user_view_model.dart';
+import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/shared/helper/local_storage_data.dart';
 import 'package:get/get.dart';
 
@@ -14,14 +14,13 @@ class Binding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => LocalStorageData());
-    Get.lazyPut(() => UserViewModel());
+    Get.lazyPut(() => ProfileViewModel());
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => ControlViewModel());
     Get.put(() => HomeViewModel());
     //Get.lazyPut(() => CartViewModel());
     Get.put(() => CartViewModel(), permanent: true);
     Get.lazyPut(() => LocalStorageData());
-    Get.lazyPut(() => UserViewModel());
     Get.lazyPut(() => CheckOutViewModel());
     Get.lazyPut(() => EditProfileViewModel());
   }

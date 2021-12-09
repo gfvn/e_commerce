@@ -1,6 +1,6 @@
 import 'package:e_commerce/view/cart/cart_view.dart';
 import 'package:e_commerce/view/feeds/feeds_view.dart';
-import 'package:e_commerce/view/user/user_view.dart';
+import 'package:e_commerce/view/profile/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class ControlViewModel extends GetxController {
   List<Widget> nextPage = [
     FeedsView(),
     CartView(),
-    UserView()
+    ProfileView()
   ];
 
   void changePage({required int index}){

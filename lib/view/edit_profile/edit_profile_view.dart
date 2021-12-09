@@ -23,202 +23,187 @@ class EditProfileView extends StatelessWidget {
         ),
         body: GetBuilder<EditProfileViewModel>(
           init: EditProfileViewModel(),
-          builder: (controller) =>
-              SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, left: 50, right: 30.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+          builder: (controller) => SingleChildScrollView(
+              child: Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 50, right: 30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(IconBroken.Arrow___Left_2),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () => controller.changeFinished(userModel: userModel, context: context),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: primaryColor,
+                        ),
+                        height: 40.0,
+                        width: 40.0,
+                        child: const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                hSizedBox3,
+                CustomText(
+                  text: 'Account',
+                  fontSize: 35,
+                  fontFamily: 'DisplayRegularMedium',
+                ),
+                hSizedBox4,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: 'Photo',
+                      fontSize: 25,
+                      color: Colors.grey,
+                      fontFamily: 'DisplayRegularMedium',
+                    ),
+                    wSizedBox4,
+                    Column(
                       children: [
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-
-                              },
-                              child: Icon(IconBroken.Arrow___Left_2),
-                            ),
-                            Spacer(),
-                            InkWell(
-                              onTap: () =>
-                                  controller.uploadImageUser(
-                                    uId: userModel.uId!,
-                                    name: (controller.nameController.text
-                                        .isEmpty ? userModel.name : controller
-                                        .nameController.text)!,
-                                    email: (controller.emailController.text
-                                        .isEmpty ? userModel.email : controller
-                                        .emailController.text)!,
-                                    age: (controller.ageController.text.isEmpty
-                                        ? userModel.age
-                                        : controller.ageController.text)!,
-                                    gender: (controller.genderController.text
-                                        .isEmpty ? userModel.gender : controller
-                                        .genderController.text)!,
-                                  ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: primaryColor,
-                                ),
-                                height: 40.0,
-                                width: 40.0,
-                                child: const Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          ],
+                        CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          radius: 50.0,
+                          backgroundImage: controller.profileImage == null
+                              ? NetworkImage('${userModel.image}')
+                              : FileImage(controller.profileImage!)
+                                  as ImageProvider,
                         ),
-                        hSizedBox3,
-                        CustomText(
-                          text: 'Account',
-                          fontSize: 35,
-                          fontFamily: 'DisplayRegularMedium',
+                        hSizedBox2,
+                        InkWell(
+                          onTap: () {
+                            controller.selectOption(context);
+                          },
+                          child: CustomText(
+                            text: 'Upload Image',
+                            fontSize: 25.0,
+                            color: primaryColor,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                hSizedBox3,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: 'Name',
+                      fontSize: 20.0,
+                      color: Colors.grey,
+                      fontFamily: 'DisplayRegularMedium',
+                    ),
+                    wSizedBox4,
+                    CustomTextFormFieldEditUser(
+                        hint: '${userModel.name}',
+                        type: TextInputType.name,
+                        controller: controller.nameController),
+                  ],
+                ),
+                hSizedBox3,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: 'Gender',
+                      fontSize: 20.0,
+                      color: Colors.grey,
+                      fontFamily: 'DisplayRegularMedium',
+                    ),
+                    const SizedBox(
+                      width: 70.0,
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            controller.changeGender();
+                            controller.type(chooseType.female);
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: controller.isGender
+                                ? Colors.grey
+                                : controller.isColor,
+                            radius: 30.0,
+                            child: Image.asset(
+                              '$urlImage/male.png',
+                              fit: BoxFit.cover,
+                              height: 25,
+                            ),
+                          ),
                         ),
-                        hSizedBox4,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              text: 'Photo',
-                              fontSize: 25,
-                              color: Colors.grey,
-                              fontFamily: 'DisplayRegularMedium',
-                            ),
-                            wSizedBox4,
-                            Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  radius: 50.0,
-                                  backgroundImage: NetworkImage('${userModel
-                                      .image}'),
-                                ),
-                                hSizedBox2,
-                                InkWell(
-                                  onTap: () {
-                                    controller.selectOption(context);
-                                  },
-                                  child: CustomText(
-                                    text: 'Upload Image',
-                                    fontSize: 25.0,
-                                    color: primaryColor,
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        hSizedBox3,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: 'Name',
-                              fontSize: 20.0,
-                              color: Colors.grey,
-                              fontFamily: 'DisplayRegularMedium',
-                            ),
-                            wSizedBox4,
-                            CustomTextFormFieldEditUser(
-                                hint: '${userModel.name}',
-                                type: TextInputType.name,
-                                controller: controller.nameController),
-                          ],
-                        ),
-                        hSizedBox3,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: 'Gender',
-                              fontSize: 20.0,
-                              color: Colors.grey,
-                              fontFamily: 'DisplayRegularMedium',
-                            ),
-                            const SizedBox(
-                              width: 70.0,
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    controller.changeGender();
-                                    controller.type(chooseType.female);
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: controller.isGender
-                                        ? Colors.grey
-                                        : controller.isColor,
-                                    radius: 30.0,
-                                    child: Image.asset(
-                                      '$urlImage/male.png',
-                                      fit: BoxFit.cover,
-                                      height: 25,
-                                    ),
-                                  ),
-                                ),
-                                wSizedBox2,
-                                InkWell(
-                                  onTap: () {
-                                    controller.changeGender();
-                                    controller.type(chooseType.male);
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: controller.isGender
-                                        ? controller.isColor
-                                        : Colors.grey,
-                                    radius: 30.0,
-                                    child: Image.asset('$urlImage/female.png',
-                                        fit: BoxFit.cover, height: 25),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        hSizedBox3,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: 'Age',
-                              fontSize: 20.0,
-                              color: Colors.grey,
-                              fontFamily: 'DisplayRegularMedium',
-                            ),
-                            wSizedBox4,
-                            CustomTextFormFieldEditUser(
-                                hint: '${userModel.age}',
-                                type: TextInputType.name,
-                                controller: controller.ageController),
-                          ],
-                        ),
-                        hSizedBox3,
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomText(
-                              text: 'Email',
-                              fontSize: 20.0,
-                              color: Colors.grey,
-                              fontFamily: 'DisplayRegularMedium',
-                            ),
-                            const SizedBox(
-                              width: 70.0,
-                            ),
-                            CustomTextFormFieldEditUser(
-                                hint: '${userModel.email}',
-                                type: TextInputType.name,
-                                controller: controller.emailController),
-                          ],
+                        wSizedBox2,
+                        InkWell(
+                          onTap: () {
+                            controller.changeGender();
+                            controller.type(chooseType.male);
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: controller.isGender
+                                ? controller.isColor
+                                : Colors.grey,
+                            radius: 30.0,
+                            child: Image.asset('$urlImage/female.png',
+                                fit: BoxFit.cover, height: 25),
+                          ),
                         ),
                       ],
                     ),
-                  )),
+                  ],
+                ),
+                hSizedBox3,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: 'Age',
+                      fontSize: 20.0,
+                      color: Colors.grey,
+                      fontFamily: 'DisplayRegularMedium',
+                    ),
+                    wSizedBox4,
+                    CustomTextFormFieldEditUser(
+                        hint: '${userModel.age}',
+                        type: TextInputType.name,
+                        controller: controller.ageController),
+                  ],
+                ),
+                hSizedBox3,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: 'Email',
+                      fontSize: 20.0,
+                      color: Colors.grey,
+                      fontFamily: 'DisplayRegularMedium',
+                    ),
+                    const SizedBox(
+                      width: 70.0,
+                    ),
+                    CustomTextFormFieldEditUser(
+                        hint: '${userModel.email}',
+                        type: TextInputType.name,
+                        controller: controller.emailController),
+                  ],
+                ),
+              ],
+            ),
+          )),
         ));
   }
 }

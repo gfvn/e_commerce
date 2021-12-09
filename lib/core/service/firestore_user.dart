@@ -29,4 +29,6 @@ class FirestoreUsers {
         .child('users/${Uri.file(path).pathSegments.last}')
         .putFile(fileImage);
   }
+
+
 }

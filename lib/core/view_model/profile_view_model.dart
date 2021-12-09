@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:e_commerce/shared/helper/local_storage_data.dart';
 
-class UserViewModel extends GetxController {
+class ProfileViewModel extends GetxController {
 
 
   UserModel? userModel;

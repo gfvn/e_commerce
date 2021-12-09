@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/view_model/user_view_model.dart';
+import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/view/edit_profile/edit_profile_view.dart';
 import 'package:e_commerce/view/shipping_address/shipping_address_view.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ const List<String> images = [
 
 
 List<Widget> userPages = [
-  EditProfileView(userModel: Get.find<UserViewModel>().userModel!,),
+  EditProfileView(userModel: Get.find<ProfileViewModel>().userModel!,),
   ShippingAddressView(),
   ShippingAddressView(),
   ShippingAddressView(),

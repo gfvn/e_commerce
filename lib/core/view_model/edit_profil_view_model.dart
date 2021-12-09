@@ -1,13 +1,18 @@
 import 'dart:io' as i;
 import 'package:e_commerce/core/service/firestore_user.dart';
+import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditProfileViewModel extends GetxController {
+
+  // EditProfileViewModel(){firestoreUsers.g();firestoreUsers.getUpdateUser();}
+
   var nameController = TextEditingController();
   var ageController = TextEditingController();
   var emailController = TextEditingController();
@@ -21,6 +26,12 @@ class EditProfileViewModel extends GetxController {
   Color? _isColor = Colors.deepPurple;
 
   FirestoreUsers firestoreUsers = FirestoreUsers();
+
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
 
   changeGender() {
     _isGender = !_isGender;
@@ -39,6 +50,7 @@ class EditProfileViewModel extends GetxController {
     } else {
       print('<<<<<<<<<<<<<<<<<<<<<<<<Error in image>>>>>>>>>>>>>>>');
     }
+    update();
     // _updateDatabase(photo);
   }
 
@@ -82,6 +94,7 @@ class EditProfileViewModel extends GetxController {
         age: age,
         gender: gender);
     await firestoreUsers.updateCurrentUser(uId, userModel);
+    update();
   }
 
   void uploadImageUser({
@@ -110,10 +123,11 @@ class EditProfileViewModel extends GetxController {
         print('<<<<<<$error>>>>>>>>>>>');
       },
     );
+    update();
   }
 
   type(chooseType e) {
-    switch(e){
+    switch (e) {
       case chooseType.male:
         genderController.text = 'male';
         break;
@@ -122,49 +136,44 @@ class EditProfileViewModel extends GetxController {
         break;
     }
     return genderController.text;
+  }
+
+  changeFinished({
+    required UserModel userModel,
+    required BuildContext context
+  }) {
+    profileImage == null
+        ? updateUser(
+            uId: userModel.uId!,
+            name: (nameController.text.isEmpty
+                ? userModel.name
+                : nameController.text)!,
+            email: (emailController.text.isEmpty
+                ? userModel.email
+                : emailController.text)!,
+            age: (ageController.text.isEmpty
+                ? userModel.age
+                : ageController.text)!,
+            gender: (genderController.text.isEmpty
+                ? userModel.gender
+                : genderController.text)!,
+            image: userModel.image!,
+          )
+        : uploadImageUser(
+            uId: userModel.uId!,
+            name: (nameController.text.isEmpty
+                ? userModel.name
+                : nameController.text)!,
+            email: (emailController.text.isEmpty
+                ? userModel.email
+                : emailController.text)!,
+            age: (ageController.text.isEmpty
+                ? userModel.age
+                : ageController.text)!,
+            gender: (genderController.text.isEmpty
+                ? userModel.gender
+                : genderController.text)!,
+          );
+    Get.back();
+  }
 }
-
-// Future<void> getFromImage() async {
-//   final pickedFileImage = await profileImagePicker.pickImage(
-//     source: ImageSource.gallery,
-//   );
-//   if (pickedFileImage != null) {
-//     profileImage = XFile(pickedFileImage.path);
-//   } else {
-//     print('Error in image');
-//   }
-// }
-
-// void uploadProfileImage({
-//   required String phone,
-//   required String name,
-//   required String bio,
-// })async {
-//
-//   await firebase_storage.FirebaseStorage.instance
-//       .ref()
-//       .child('users/${Uri.file(profileImage!.path).pathSegments.last}')
-//       .putFile(profileImage)
-//       .then((value) {
-//     value.ref.getDownloadURL().then(
-//           (value) {
-//         // updateUser(
-//         //   phone: phone,
-//         //   name: name,
-//         //   bio: bio,
-//         //   image: value,
-//         // );
-//       },
-//     ).catchError(
-//           (error) {
-//       },
-//     );
-//   }).catchError(
-//         (error) {
-//       print(error.toString());
-//     },
-//   );
-// }
-
-}
-
