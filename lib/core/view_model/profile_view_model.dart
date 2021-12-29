@@ -9,7 +9,7 @@ import 'package:e_commerce/shared/helper/local_storage_data.dart';
 class ProfileViewModel extends GetxController {
 
 
-  UserModel? userModel;
+  late UserModel userModel;
 
 
   LocalStorageData localStorageData = LocalStorageData();

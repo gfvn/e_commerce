@@ -26,7 +26,6 @@ class AuthViewModel extends GetxController {
 
   String? get userId => _user.value?.uid;
 
-
   @override
   void onInit() {
     // TODO: implement onInit
@@ -106,14 +105,16 @@ class AuthViewModel extends GetxController {
     try {
       await _auth
           .signInWithEmailAndPassword(
-              email: email.text, password: password.text)
+        email: email.text,
+        password: password.text,
+      )
           .then(
         (value) async {
           await FirestoreUsers().getCurrentUser(value.user!.uid).then((value) {
-            setData(UserModel.fromJson(value.data() as Map<String,dynamic>));
+            setData(UserModel.fromJson(value.data() as Map<String, dynamic>));
           });
           saveUser(value);
-          Get.to(ControlView());
+          Get.to(const ControlView());
         },
       );
     } catch (e) {
@@ -130,7 +131,9 @@ class AuthViewModel extends GetxController {
     try {
       await _auth
           .createUserWithEmailAndPassword(
-              email: email.text, password: password.text)
+        email: email.text,
+        password: password.text,
+      )
           .then((value) {
         saveUser(value);
       }).catchError(
@@ -152,7 +155,8 @@ class AuthViewModel extends GetxController {
       name: name.text == "" ? userCredential.user!.displayName : name.text,
       email: email.text == "" ? userCredential.user!.email : email.text,
       uId: userCredential.user!.uid,
-      image: 'https://firebasestorage.googleapis.com/v0/b/e-commerce-b50f8.appspot.com/o/user%2Fperson.png?alt=media&token=f3b2451c-471c-4f71-87a7-bca2d234d391',
+      image:
+          'https://firebasestorage.googleapis.com/v0/b/e-commerce-b50f8.appspot.com/o/user%2Fperson.png?alt=media&token=f3b2451c-471c-4f71-87a7-bca2d234d391',
       gender: '',
       age: '0',
     );

@@ -7,6 +7,7 @@ import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/core/view_model/edit_profil_view_model.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/core/view_model/profile_view_model.dart';
+import 'package:e_commerce/core/view_model/shipping_address_view_model.dart';
 import 'package:e_commerce/shared/helper/local_storage_data.dart';
 import 'package:get/get.dart';
 
@@ -23,5 +24,6 @@ class Binding extends Bindings {
     Get.lazyPut(() => LocalStorageData());
     Get.lazyPut(() => CheckOutViewModel());
     Get.lazyPut(() => EditProfileViewModel());
+    Get.lazyPut(() => ShippingAddressViewModel());
   }
 }

@@ -82,7 +82,7 @@ class FeedsView extends StatelessWidget {
                       ),
                       hSizedBox2,
                       Container(
-                        height: 350.0,
+                        height: MediaQuery.of(context).size.height/2.5,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) => InkWell(

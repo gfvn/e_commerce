@@ -56,7 +56,7 @@ const List<String> images = [
 
 
 List<Widget> userPages = [
-  EditProfileView(userModel: Get.find<ProfileViewModel>().userModel!,),
+  EditProfileView(userModel: Get.find<ProfileViewModel>().userModel,),
   ShippingAddressView(),
   ShippingAddressView(),
   ShippingAddressView(),
@@ -73,3 +73,15 @@ enum Pages {
   AddAddress,
   Summary,
 }
+
+List<String> textField = [
+  'Full Name',
+  'Address',
+  'City',
+  'State/Province/Region',
+  'Zip Code (Postal Code)',
+  'County'
+];
+
+
+
