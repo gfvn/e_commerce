@@ -24,7 +24,7 @@ class CartView extends StatelessWidget {
         body: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.7,
+                    height: MediaQuery.of(context).size.height * 0.6949,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         if (controller.cartProduct[index].count != 0) {

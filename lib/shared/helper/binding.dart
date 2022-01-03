@@ -19,11 +19,11 @@ class Binding extends Bindings {
     Get.lazyPut(() => AuthViewModel());
     Get.lazyPut(() => ControlViewModel());
     Get.put(() => HomeViewModel());
-    //Get.lazyPut(() => CartViewModel());
     Get.put(() => CartViewModel(), permanent: true);
     Get.lazyPut(() => LocalStorageData());
     Get.lazyPut(() => CheckOutViewModel());
     Get.lazyPut(() => EditProfileViewModel());
-    Get.lazyPut(() => ShippingAddressViewModel());
+    Get.put(() => ShippingAddressViewModel(),permanent: true);
+    Get.lazyPut(() => CheckOutViewModel());
   }
 }

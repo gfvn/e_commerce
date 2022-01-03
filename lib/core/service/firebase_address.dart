@@ -17,9 +17,7 @@ class FirebaseAddress {
     return await _collectionReference.doc(id).update(addressModel.toJson());
   }
 
-  Future<QuerySnapshot> getAddress() async {
-    print(Get.find<ProfileViewModel>().userModel.uId);
-    QuerySnapshot querySnapshot = await _collectionReference.get();
-    return querySnapshot;
+  Stream<QuerySnapshot> getAddress() {
+    return  _collectionReference.snapshots();
   }
 }

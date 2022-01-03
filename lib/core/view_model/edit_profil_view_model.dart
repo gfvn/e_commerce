@@ -1,6 +1,5 @@
 import 'dart:io' as i;
 import 'package:e_commerce/core/service/firestore_user.dart';
-import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/shared/constants/constants.dart';
 

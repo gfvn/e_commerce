@@ -57,11 +57,10 @@ const List<String> images = [
 
 List<Widget> userPages = [
   EditProfileView(userModel: Get.find<ProfileViewModel>().userModel,),
-  ShippingAddressView(),
-  ShippingAddressView(),
-  ShippingAddressView(),
-  ShippingAddressView(),
-  ShippingAddressView(),
+   ShippingAddressView(),
+   ShippingAddressView(),
+   ShippingAddressView(),
+   ShippingAddressView(),
 ];
 
 const kTileHeight = 50.0;

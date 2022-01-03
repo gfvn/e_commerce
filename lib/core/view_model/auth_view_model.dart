@@ -2,7 +2,7 @@ import 'package:e_commerce/core/service/firestore_user.dart';
 import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/shared/helper/local_storage_data.dart';
 import 'package:e_commerce/view/control/control_view.dart';
-import 'package:e_commerce/view/homwLayout/home_layout_view.dart';
+import 'package:e_commerce/view/homw_layout/home_layout_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

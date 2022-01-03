@@ -17,7 +17,10 @@ class ProfileView extends StatelessWidget {
       init: ProfileViewModel(),
       builder: (controller) => ConditionalBuilder(
         condition: controller.isProfileLoading,
-        builder: (context) => builderItem(context, controller),
+        builder: (context){
+          print(controller.userModel.image);
+          return builderItem(context, controller);
+          },
         fallback: (context) => const Center(child: CircularProgressIndicator()),
       ),
     );
@@ -33,7 +36,7 @@ class ProfileView extends StatelessWidget {
                     backgroundColor: Colors.grey,
                     radius: 60.0,
                     backgroundImage:
-                        NetworkImage('${controller.userModel!.image}'),
+                        NetworkImage('${controller.userModel.image}'),
                   ),
                   wSizedBox3,
                   Column(
