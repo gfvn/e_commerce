@@ -1,4 +1,7 @@
 import 'package:e_commerce/core/view_model/profile_view_model.dart';
+import 'package:e_commerce/view/checkout/address_form.dart';
+import 'package:e_commerce/view/checkout/card_form.dart';
+import 'package:e_commerce/view/checkout/overview.dart';
 import 'package:e_commerce/view/edit_profile/edit_profile_view.dart';
 import 'package:e_commerce/view/shipping_address/shipping_address_view.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +47,21 @@ enum chooseType {
   male , female
 }
 
+
+List<Step> steps = [
+  Step(
+    title: Text('Address'),
+    content: AddressForm(),
+  ),
+  Step(
+    title: Text('Card Details'),
+    content: CardForm(),
+  ),
+  Step(
+    title: Text('Overview'),
+    content: Overview(),
+  )
+];
 
 const List<String> images = [
   '$urlImage/Icon_Edit-Profile.png',

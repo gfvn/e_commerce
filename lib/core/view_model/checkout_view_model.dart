@@ -12,6 +12,7 @@ class CheckOutViewModel extends GetxController {
   String cardNumber = '';
   String cardCvv = '';
   String cardName = '';
+  int currentStep = 0;
 
 
   TextEditingController number = TextEditingController();
@@ -37,29 +38,25 @@ class CheckOutViewModel extends GetxController {
 
 
 
-  int _processIndex = 0;
-  int get processIndex => _processIndex;
-  Pages get pages => _pages;
-  Pages _pages = Pages.DeliveryTime;
 
-  Color getColor(int index) {
-    if (index == _processIndex) {
-      return inProgressColor;
-    } else if (index < _processIndex) {
-      return Colors.green;
+  void onStepCancel() {
+    if (currentStep > 0) {
+      currentStep -= 1;
     } else {
-      return todoColor;
+      currentStep = 0;
     }
+    update();
   }
-
-  void changePage() {
-    _processIndex++;
-    if (_processIndex == 1) {
-      _pages = Pages.AddAddress;
-    } else if (_processIndex == 2) {
-      _pages = Pages.Summary;
-    } else if (_processIndex == 3) {
-      Get.to(const FinishView());
+  void onStepContinue() {
+    if (currentStep < steps.length - 1) {
+      currentStep += 1;
+    } else {
+      currentStep = 0;
     }
+    update();
+  }
+  void onStepTapped(int step) {
+    currentStep = step;
+    update();
   }
 }
